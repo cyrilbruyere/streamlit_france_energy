@@ -1,0 +1,9 @@
+# Configuration
+env/
+wheels/
+
+# Archive
+bin/
+
+# Others
+**/__pycache__
