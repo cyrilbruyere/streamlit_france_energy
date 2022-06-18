@@ -33,6 +33,9 @@ def run():
     capacites = ['Capa_Hydraulique', 'Capa_Eolien', 'Capa_Solaire'] # 'Capa_Renouvelable', 'Capa_Totale', 'Capa_Nucleaire', 'Capa_Thermique'
     charges = ['TCH_Hydraulique', 'TCH_Eolien', 'TCH_Solaire'] # 'TCH_Renouvelable', 'TCH_Total', 'TCH_Thermique', 'TCH_Nucleaire', 
     el_naturels = ['temperature', 'Vent', 'Humidite', 'Precipitations']
+    region_names = ['France', 'Auverge Rhône Alpes', 'Bretagne', 'Bourgogne Franche Comté', 'Centre Val de Loire', 'Grand Est',
+                    'Hauts de France', 'Ile de France', 'Normandie', 'Nouvelle Aquitaine', 'Occitanie', "Provence Alpes Côte d'Azur",
+                    'Pays de Loire']
 
     # Filtres de sélection
     st.markdown(
@@ -46,7 +49,7 @@ def run():
         unsafe_allow_html=True,
     )
     region = st.selectbox(label = '',
-                        options = regions,
+                        options = region_names,
                         index = 0,
                         key='reg_ER')
 
@@ -61,17 +64,19 @@ def run():
                         key='en_ER')
 
     annee = annee - 2000
+    region_code = regions[region_names.index(region)]
+
     capa_filiere = ['Capa_Thermique']
     capa_filiere.append('Capa_' + filiere)
     TCH_filiere = 'TCH_' + filiere
 
     # Dataframe général contenant l'ensemble des données
-    if region == 'FRANCE':
+    if region == 'France':
         graf_capa = capacite.drop(['Regions'], axis = 1)
         graf_capa = graf_capa.groupby(['YYMM']).sum()
         graf_capa.reset_index(inplace = True)
     else:
-        graf_capa = capacite[capacite['Regions'] == region]
+        graf_capa = capacite[capacite['Regions'] == region_code]
 
     carte_tch = capacite[capacite['YY'] == annee]
     carte_tch.drop(['YYMM', 'MM'], axis = 1, inplace = True)

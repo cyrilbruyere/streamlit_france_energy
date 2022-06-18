@@ -38,7 +38,7 @@ def run():
     )
     
     filtre = st.select_slider(label = 'Valeur du filtre',
-                              options = [100000, 300000, 500000, 700000, 900000, 1000000, 3000000],
+                              options = [100000, 300000, 500000, 700000, 900000, 1000000, 3000000, 5000000],
                               value = 700000,
                               key='sel_F')
 

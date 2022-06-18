@@ -31,7 +31,7 @@ def run():
     carte_sta = gpd.GeoDataFrame(station, geometry = gpd.points_from_xy(station['Longitude'], station['Latitude']), crs = 4326)
     
     # Carte des éoliennes
-    eoliennes = gpd.read_file('./geometry/eoliennes.shp')
+    eoliennes = gpd.read_file('./geometry/eoliennes.json')
     eoliennes.rename({'layer' : 'Regions'}, axis = 1, inplace = True)
     eoliennes.replace(to_replace = ['eolien_auvergne_rhone_alpes', 'eolien_bourgogne', 'eolien_bretagne',
                                     'eolien_centre', 'eolien_grand_est', 'eolien_hauts_de_france',
@@ -55,6 +55,9 @@ def run():
     capacites = ['Capa_Renouvelable', 'Capa_Hydraulique', 'Capa_Solaire', 'Capa_Eolienne'] # , 'Capa_Nucleaire', 'Capa_Thermique', 'Capa_Totale'
     charges = ['TCH_Nucleaire', 'TCH_Hydraulique', 'TCH_Solaire', 'TCH_Eolien']
     el_naturels = ['temperature', 'Vent', 'Humidite', 'Precipitations']
+    region_names = ['France', 'Auverge Rhône Alpes', 'Bretagne', 'Bourgogne Franche Comté', 'Centre Val de Loire', 'Grand Est',
+                    'Hauts de France', 'Ile de France', 'Normandie', 'Nouvelle Aquitaine', 'Occitanie', "Provence Alpes Côte d'Azur",
+                    'Pays de Loire']
 
     # Filtres de sélection
     st.markdown(
@@ -68,7 +71,7 @@ def run():
         unsafe_allow_html=True,
     )
     region = st.selectbox(label = '',
-                        options = regions,
+                        options = region_names,
                         index = 0,
                         key='reg_L')
                         
@@ -78,6 +81,7 @@ def run():
                         key='an_L')
 
     annee = annee - 2000
+    region_code = regions[region_names.index(region)]
 
     # Dataframe général contenant l'ensemble des données
 
@@ -89,10 +93,10 @@ def run():
     carte_met = carte_met.merge(carte, left_on = 'Regions', right_on = 'nom')
 
 
-    if region != 'FRANCE':
-        carte_met = carte_met[carte_met['Regions']==region]
-        carte_eol = carte_eol[carte_eol['Regions']==region]
-        carte_sta = carte_sta[carte_sta['Regions']==region]
+    if region != 'France':
+        carte_met = carte_met[carte_met['Regions']==region_code]
+        carte_eol = carte_eol[carte_eol['Regions']==region_code]
+        carte_sta = carte_sta[carte_sta['Regions']==region_code]
         map_eol = '#DCDCDC'
     else:
         map_eol = 'white'
