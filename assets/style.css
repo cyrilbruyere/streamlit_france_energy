@@ -2,7 +2,7 @@ h1,
 h2,
 h3,
 h4 {
-  color: #CECECE;
+  color: #10b8dd;
 }
 
 code {
@@ -26,6 +26,7 @@ footer {
 .st-cc {
   color: black;
   font-weight: 500;
+  background-color: #10b8dd;
 }
 
 /* Sidebar */
@@ -45,7 +46,7 @@ section[data-testid="stSidebar"] button[kind="icon"] {
 }
 
 section[data-testid="stSidebar"] .st-bk {
-  background-color: white;
+  background-color: #10b8dd;
 }
 
 section[data-testid="stSidebar"] .st-c0 {
