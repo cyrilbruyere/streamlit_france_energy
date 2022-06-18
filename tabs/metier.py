@@ -31,7 +31,7 @@ def run():
     carte_sta = gpd.GeoDataFrame(station, geometry = gpd.points_from_xy(station['Longitude'], station['Latitude']), crs = 4326)
     
     # Carte des éoliennes
-    eoliennes = gpd.read_file('./geometry/eoliennes.json')
+    eoliennes = gpd.read_file('./geometry/eoliennes.shp')
     eoliennes.rename({'layer' : 'Regions'}, axis = 1, inplace = True)
     eoliennes.replace(to_replace = ['eolien_auvergne_rhone_alpes', 'eolien_bourgogne', 'eolien_bretagne',
                                     'eolien_centre', 'eolien_grand_est', 'eolien_hauts_de_france',
@@ -40,8 +40,7 @@ def run():
                       value = ['AURA', 'BFC', 'B', 'CVDL', 'GE', 'HF', 'IDF', 'N', 'NlleA', 'O', 'PACA', 'PDL'],
                       inplace = True)
     carte_eol = gpd.GeoDataFrame(eoliennes, geometry = 'geometry')
-    carte_eol = carte_eol[['Regions', 'geometry']]
-    # carte_eol = carte_eol.to_crs(3395)
+    carte_eol = carte_eol.to_crs(4326)
 
     # Datasets
     # energie = pd.read_csv('./source/energies_M.csv', sep = ';')

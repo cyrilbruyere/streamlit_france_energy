@@ -10,12 +10,12 @@ TEAM_MEMBERS = [
     Member(
         name="David Beauvais",
         linkedin_url="https://www.linkedin.com/in/david-be04/",
-        github_url="https://github.com/davidbeauvais",
+        github_url="https://github.com/Dave0sudiste",
     ),
     Member(
         name="Jean-Yves Bernard",
         linkedin_url="https://www.linkedin.com/in/jean-yves-bernard-56aa402/",
-        github_url="https://github.com/jeanyvesbernard",
+        github_url="https://github.com/JYB8",
     ),
     Member(
         name="Cyril Bruyère",
