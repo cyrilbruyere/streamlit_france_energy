@@ -64,7 +64,7 @@ def run():
         """
         <style>
         [data-baseweb="select"] {
-            margin-top: -50px;
+            margin-top: -40px;
         }
         </style>
         """,

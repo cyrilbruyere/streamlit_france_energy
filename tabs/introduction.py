@@ -55,7 +55,7 @@ def run():
         unsafe_allow_html=True,
     )
     annee = st.selectbox(label  = '',
-                        options = ['All years', 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021],
+                        options = ['2013 à 2021', 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021],
                         index = 0,
                         key='an_Intro')
 
@@ -64,7 +64,7 @@ def run():
     energie_FR = energie_FR.groupby(['YY', 'YYMM']).sum()
     energie_FR.reset_index(inplace = True)
 
-    if annee == 'All years':
+    if annee == '2013 à 2021':
         graf_energie = energie_FR
         graf_balance = balance
         nticks = 10
@@ -102,7 +102,11 @@ def run():
 
     st.plotly_chart(this_figure)
 
-    st.markdown("1. Consommation cyclique : très forte l'hiver avec un rebond au coeur de l'été")
-    st.markdown('2. Production = réponse à la consommation mais de moins en moins stable')
-    st.markdown("3. Lissage mensuel ne permet pas d'identifier les balances négatives")
-    st.markdown('4. Balances négatives de plus en plus fréquentes et importantes')
+    st.markdown("---")
+    st.markdown("""
+                1. Consommation cyclique : très forte l'hiver (chauffage) avec un rebond au coeur de l'été (climatisation)
+                2. Production = réponse à la demande lié à la consommation mais de moins en moins stable
+                3. Lissage mensuel ne permet pas d'identifier les balances négatives
+                4. Balances négatives de plus en plus fréquentes et importantes
+
+                """)

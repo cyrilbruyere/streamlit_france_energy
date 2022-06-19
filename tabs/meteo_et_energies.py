@@ -39,7 +39,7 @@ def run():
         """
         <style>
         [data-baseweb="select"] {
-            margin-top: -50px;
+            margin-top: -40px;
         }
         </style>
         """,
@@ -83,12 +83,14 @@ def run():
     carte_gen = carte_gen.merge(carte_pop, left_on = 'Regions', right_on = 'Regions')
     carte_gen = carte_gen.merge(carte, left_on = 'Regions', right_on = 'nom')
 
+    # carte_gen['Chauffage'] = carte_gen['Population'] / carte_gen['Temperature']
+
     if filiere == 'Consommation':
         liaison = 'Temperature'
         localisation = 'Population'
         map_col = 'PuRd_r'
         display_text = """
-                       Nous avons vu que la consommation était liée à la température car élevée en hiver et faible en été.
+                       Nous avons vu que la consommation était liée à la température (chauffage en hiver).
                        Nous observons qu'elle est également fortement corrélée à la population. La notion de quantité de chauffage
                        est sous-jacente, combinaison de température faible et nombre d'habitations à chauffer.
                        """
@@ -149,5 +151,13 @@ def run():
     plt.title(liaison, loc = 'left')
     st.pyplot(fig3)
 
+    # if filiere == 'Consommation':
+    #     fig4, ax = plt.subplots()
+    #     plt.style.use('dark_background')
+    #     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
+    #     carte_gen.plot(column = 'Chauffage', cmap='PuRd', legend = True, ax = ax)
+    #     plt.axis('off')
+    #     plt.title('Chauffage', loc = 'left')
+    #     st.pyplot(fig4)
 
 

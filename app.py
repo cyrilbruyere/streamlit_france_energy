@@ -37,7 +37,6 @@ def run():
     )
     st.sidebar.markdown(f"## {config.TITLE}")
     tab_name = st.sidebar.radio("", list(TABS.keys()), 0)
-    st.sidebar.markdown("---")
     st.sidebar.markdown(f"## {config.PROMOTION}")
 
     st.sidebar.markdown("### Team members:")

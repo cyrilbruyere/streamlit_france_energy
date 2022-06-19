@@ -42,7 +42,7 @@ def run():
         """
         <style>
         [data-baseweb="select"] {
-            margin-top: -50px;
+            margin-top: -40px;
         }
         </style>
         """,
@@ -60,7 +60,7 @@ def run():
 
     filiere = st.selectbox(label = '',
                         options = energies,
-                        index = 0,
+                        index = 2,
                         key='en_ER')
 
     annee = annee - 2000
@@ -117,5 +117,9 @@ def run():
     plt.title('Taux de charge', loc = 'left', color = 'white')
     st.pyplot(fig2)
 
-    st.markdown('1- Développement des sources renouvelable pour remplacer les énergies fossiles (charbon, ...)')
-    st.markdown('2- Plus de capacité mais efficacité réduite, 20 à 60% (90% pour les énergies pilotées)')
+    st.markdown("---")
+    st.markdown("""
+                1. Développement des sources renouvelable pour remplacer les énergies fossiles (charbon, ...)
+                2. Plus de capacité mais efficacité réduite, 20 à 60% (contre 90% pour les énergies pilotées)
+
+                """)
