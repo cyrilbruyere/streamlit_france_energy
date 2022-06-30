@@ -5,6 +5,7 @@ import plotly_express as px
 import streamlit as st
 import darkdetect
 # import plotly.subplots as sp
+from PIL import Image
 
 title = "Energie renouvelable"
 sidebar_name = "Energie Renouvelable"
@@ -38,6 +39,11 @@ def run():
                     'Hauts de France', 'Ile de France', 'Normandie', 'Nouvelle Aquitaine', 'Occitanie', "Provence Alpes Côte d'Azur",
                     'Pays de Loire']
 
+    
+    # Image
+    img = Image.open("./assets/production.png") 
+    st.image(img, width=500)
+    
     # Filtres de sélection
     st.markdown(
         """

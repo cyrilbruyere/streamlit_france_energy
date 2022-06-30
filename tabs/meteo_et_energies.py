@@ -89,7 +89,8 @@ def run():
     if filiere == 'Consommation':
         liaison = 'Temperature'
         localisation = 'Population'
-        map_col = 'PuRd_r'
+        map_col_1 = 'PuRd'
+        map_col_3 = 'RdBu_r'
         display_text = """
                        Nous avons vu que la consommation était liée à la température (chauffage en hiver).
                        Nous observons qu'elle est également fortement corrélée à la population. La notion de quantité de chauffage
@@ -98,7 +99,8 @@ def run():
     elif filiere == 'Hydraulique':
         liaison = 'Precipitations'
         localisation = 'Capa_Hydraulique'
-        map_col = 'PuRd'
+        map_col_1 = 'PuBu'
+        map_col_3 = 'PuBu'
         display_text = """
                        La production d'énergie dépent de la localisation des installations, principalement dans les régions où
                        il y a du relief, permettant la construction de barrages notamment.
@@ -108,7 +110,8 @@ def run():
     elif filiere == 'Eolien':
         liaison = 'Vent'
         localisation = 'Capa_Eolien'
-        map_col = 'PuRd'
+        map_col_1 = 'BuGn'
+        map_col_3 = 'BuGn'
         display_text ="""
                        La construction des éoliennes, plus récente et certainement plus objet à critique tant elles impactent
                        le paysage visuel, apparait avec des contradictions.
@@ -117,7 +120,8 @@ def run():
     elif filiere == 'Solaire':
         liaison = 'Humidite'
         localisation = 'Capa_Solaire'
-        map_col = 'plasma'
+        map_col_1 = 'OrRd'
+        map_col_3 = 'OrRd_r'
         display_text = """
                        La production d'énergie solaire est quant à elle totalement cohérente. Les installations les plus nombreuses sont
                        dans les régions où l'ensoleillement est le plus important.
@@ -131,7 +135,7 @@ def run():
     fig1, ax = plt.subplots()
     plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = filiere, cmap='BuGn', legend = True, ax = ax)
+    carte_gen.plot(column = filiere, cmap=map_col_1, legend = True, ax = ax)
     plt.axis('off')
     plt.title(filiere + ' (énergie)', loc = 'left', color = '#10b8dd')
     st.pyplot(fig1)
@@ -139,17 +143,17 @@ def run():
     fig2, ax = plt.subplots()
     plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = localisation, cmap='PuBu', legend = True, ax = ax)
+    carte_gen.plot(column = localisation, cmap=map_col_1, legend = True, ax = ax)
     plt.axis('off')
-    plt.title(localisation, loc = 'left', color = '#10b8dd')
+    plt.title('Capacité ' + localisation[5:] if localisation[:4] == 'Capa' else localisation, loc = 'left', color = '#10b8dd')
     st.pyplot(fig2)
 
     fig3, ax = plt.subplots()
     plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = liaison, cmap=map_col, legend = True, ax = ax)
+    carte_gen.plot(column = liaison, cmap=map_col_3, legend = True, ax = ax)
     plt.axis('off')
-    plt.title(liaison, loc = 'left', color = '#10b8dd')
+    plt.title('Temps clair' if liaison == 'Humidite' else liaison, loc = 'left', color = '#10b8dd')
     st.pyplot(fig3)
 
     # if filiere == 'Consommation':
