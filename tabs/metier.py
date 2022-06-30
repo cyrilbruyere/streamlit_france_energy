@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import plotly_express as px
 import streamlit as st
 # import plotly.subplots as sp
+import darkdetect
 
 title = "Données métier"
 sidebar_name = "Données métier"
@@ -103,11 +104,11 @@ def run():
 
     # Affichage
     fig1, ax = plt.subplots()
-    plt.style.use('dark_background')
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_met = gpd.GeoDataFrame(carte_met, geometry = 'geometry', crs = 4326)
     carte_met.plot(column = 'Vent', cmap='PuRd', legend = True, ax = ax)
     carte_eol.plot(markersize = 3, color = map_eol, ax = ax)
     carte_sta.plot(markersize = 3, color = 'blue', ax = ax)
     plt.axis('off')
-    plt.title('Vent', loc = 'left')
+    plt.title('Vent', loc = 'left', color = '#10b8dd')
     st.pyplot(fig1)

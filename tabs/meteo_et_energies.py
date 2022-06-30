@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 # import plotly_express as px
 import streamlit as st
 # import plotly.subplots as sp
+import darkdetect
 
 title = "Météo et énergies"
 sidebar_name = "Météo et énergies"
@@ -116,7 +117,7 @@ def run():
     elif filiere == 'Solaire':
         liaison = 'Humidite'
         localisation = 'Capa_Solaire'
-        map_col = 'PuRd_r'
+        map_col = 'plasma'
         display_text = """
                        La production d'énergie solaire est quant à elle totalement cohérente. Les installations les plus nombreuses sont
                        dans les régions où l'ensoleillement est le plus important.
@@ -128,27 +129,27 @@ def run():
     st.markdown(display_text)
 
     fig1, ax = plt.subplots()
-    plt.style.use('dark_background')
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = filiere, cmap='PuRd', legend = True, ax = ax)
+    carte_gen.plot(column = filiere, cmap='BuGn', legend = True, ax = ax)
     plt.axis('off')
-    plt.title(filiere + ' (énergie)', loc = 'left')
+    plt.title(filiere + ' (énergie)', loc = 'left', color = '#10b8dd')
     st.pyplot(fig1)
 
     fig2, ax = plt.subplots()
-    plt.style.use('dark_background')
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = localisation, cmap='PuRd', legend = True, ax = ax)
+    carte_gen.plot(column = localisation, cmap='PuBu', legend = True, ax = ax)
     plt.axis('off')
-    plt.title(localisation, loc = 'left')
+    plt.title(localisation, loc = 'left', color = '#10b8dd')
     st.pyplot(fig2)
 
     fig3, ax = plt.subplots()
-    plt.style.use('dark_background')
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
     carte_gen.plot(column = liaison, cmap=map_col, legend = True, ax = ax)
     plt.axis('off')
-    plt.title(liaison, loc = 'left')
+    plt.title(liaison, loc = 'left', color = '#10b8dd')
     st.pyplot(fig3)
 
     # if filiere == 'Consommation':

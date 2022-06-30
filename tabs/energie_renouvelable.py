@@ -3,6 +3,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 import plotly_express as px
 import streamlit as st
+import darkdetect
 # import plotly.subplots as sp
 
 title = "Energie renouvelable"
@@ -106,15 +107,15 @@ def run():
     fig1.update_xaxes(nticks = 9, gridcolor='grey', griddash='dash')
     fig1.update_yaxes(showgrid=False)
     fig1.update_layout(margin=dict(l=20, r=20, t=20, b=20),
-                    paper_bgcolor="black")
+                    paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white")
     st.plotly_chart(fig1)
 
     fig2, ax = plt.subplots()
-    plt.style.use('dark_background')
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_tch = gpd.GeoDataFrame(carte_tch, geometry = 'geometry', crs = 4326)
     carte_tch.plot(column = TCH_filiere, cmap='PuRd', legend = True, ax = ax)
     plt.axis('off')
-    plt.title('Taux de charge', loc = 'left', color = 'white')
+    plt.title('Taux de charge', loc = 'left', color = '#10b8dd')
     st.pyplot(fig2)
 
     st.markdown("---")

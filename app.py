@@ -2,6 +2,7 @@ from collections import OrderedDict
 import streamlit as st
 from config import config
 from tabs import introduction, energie_renouvelable, meteo_et_energies, modelisation, optimisation, fourier, metier, normalisation, energies_pilotees, resultats, interpretation, bilan
+from PIL import Image 
 
 st.set_page_config(
     page_title=config.TITLE,

@@ -5,6 +5,7 @@ import plotly_express as px
 import streamlit as st
 import plotly.subplots as sp
 import datetime as dt
+import darkdetect
 
 title = "Résultats"
 sidebar_name = "Résultats"
@@ -70,13 +71,13 @@ def run():
     fig1.update_xaxes(tickangle=90, tickvals=["2020-03-17", "2020-05-03", "2021-01-01"], gridcolor='grey', griddash='dash')
     fig1.update_xaxes(showticklabels = True, visible = True)
     fig1.update_yaxes(showgrid=False)
-    fig1.update_layout(margin=dict(l=0, r=0, t=0, b=0), paper_bgcolor="black")
+    fig1.update_layout(margin=dict(l=0, r=0, t=0, b=0), paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white")
 
     fig2 = px.bar(data_frame = erreur, x = 'mean', y = 'Erreur', text_auto = True, height = 200)
     fig2.update_xaxes(showgrid=False)
     fig2.update_xaxes(showticklabels = False, visible = False)
     fig2.update_yaxes(showgrid=False)
-    fig2.update_layout(margin=dict(l=0, r=135, t=0, b=0), paper_bgcolor="black", yaxis={'categoryorder':'category ascending'})
+    fig2.update_layout(margin=dict(l=0, r=135, t=0, b=0), paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white", yaxis={'categoryorder':'category ascending'})
 
     st.plotly_chart(fig1)
     st.plotly_chart(fig2) 

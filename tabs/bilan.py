@@ -14,29 +14,47 @@ def run():
     st.markdown("---")
     
     # Texte de présentation
-    st.subheader("Titre")
+    st.subheader("Dataset")
     st.markdown("""
-                A écrire.
+                Version gratuite ne donnant pas d’informations sur les DOM TOM et La
+                Corse. Une extension géographique des données pourrait parfaire l’étude.
 
                 """)
     st.markdown('') 
     st.markdown("---")
-    st.subheader("Titre")
+    st.subheader("Géolocalisation")
     st.markdown("""
-                A écrire.
+                la géolocalisation de chaque enregistrement météorologique, calé sur les
+                enregistrements des productions et consommations du réseau RTE permettrait une pondération plus
+                exacte et un gain de précision des prédictions de nos modèles.
                 
                 """)
     st.markdown('') 
     st.markdown("---")
-    st.subheader("Titre")
+    st.subheader("SARIMAX")
     st.markdown("""
-                A écrire.
+                l’étude montre que celui-ci n’est pas adapté à un
+                signal complexe. Notamment, il ne prend en compte qu’une seule saisonnalité alors que les signaux
+                de la réalité sont constitués d’une multitude de composantes (fréquences, amplitudes, tendance,
+                etc). Le modèle semble donc incapable d’offrir une réponse satisfaisante, y compris lorsque on lui
+                attribue des régresseurs exogènes..
 
                 """)
     st.markdown("---")
-    st.subheader("Titre")
+    st.subheader("Regresion linéaire")
     st.markdown("""
-                A écrire.
+                la régression linéaire semble en revanche prometteuse mais à la condition que l’on
+                puisse construire des variables explicatives de qualité. Celà passe notamment par la localisation des
+                enregistrements météorologiques à l’endroit des sites de production. Le revers de cette modélisation
+                est qu’elle s’appuie sur des variables explicatives qui doivent elles-mêmes être prédites.
+
+                """)
+            
+    st.markdown("---")
+    st.subheader("Deep learning")
+    st.markdown("""
+                Le travail entrepris ici n'offre pas de résultat satisfaisant et représente de fait une
+                première étape avant la recherche et la mise en œuvre d’autres modèles comme le Deep Learning.
 
                 """)
 
