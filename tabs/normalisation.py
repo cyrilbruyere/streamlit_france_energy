@@ -1,6 +1,6 @@
 import pandas as pd
 # import geopandas as gpd
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import plotly_express as px
 import streamlit as st
 import plotly.subplots as sp
@@ -35,16 +35,18 @@ def run():
    
     # Affichage
     fig1 = px.line(data_frame = eolien, x = range(0, eolien.shape[0]), y = ['Eolien', 'Capa_eol'], height = 300)
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     fig1.update_xaxes(tick0 = 0, dtick = 2920, gridcolor='grey', griddash='dash')
     fig1.update_xaxes(showticklabels = False, visible = False)
     fig1.update_yaxes(showgrid=False)
-    fig1.update_layout(margin=dict(l=0, r=0, t=0, b=0), paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white")
+    fig1.update_layout(margin=dict(l=0, r=0, t=0, b=0))
 
     fig2 = px.line(data_frame = eolien, x = range(0, eolien.shape[0]), y = ['TCH_eol'], height = 300)
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     fig2.update_xaxes(tick0 = 0, dtick = 2920, gridcolor='grey', griddash='dash')
     fig2.update_xaxes(showticklabels = False, visible = False)
     fig2.update_yaxes(showgrid=False)
-    fig2.update_layout(margin=dict(l=0, r=0, t=0, b=0), paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white")
+    fig2.update_layout(margin=dict(l=0, r=0, t=0, b=0))
 
     st.plotly_chart(fig1)
     st.plotly_chart(fig2) 

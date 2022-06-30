@@ -109,17 +109,17 @@ def run():
 
     # Affichage
     fig1 = px.line(data_frame = graf_capa, x = 'YYMM', y = capa_filiere, height = 300)
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     fig1.update_xaxes(type='category')
     fig1.update_xaxes(nticks = 9, gridcolor='grey', griddash='dash')
     fig1.update_yaxes(showgrid=False)
-    fig1.update_layout(margin=dict(l=20, r=20, t=20, b=20),
-                    paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white")
+    fig1.update_layout(margin=dict(l=20, r=20, t=20, b=20))
     st.plotly_chart(fig1)
 
     fig2, ax = plt.subplots()
-    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_tch = gpd.GeoDataFrame(carte_tch, geometry = 'geometry', crs = 4326)
     carte_tch.plot(column = TCH_filiere, cmap='PuRd', legend = True, ax = ax)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
     plt.axis('off')
     plt.title('Taux de charge', loc = 'left', color = '#10b8dd')
     st.pyplot(fig2)

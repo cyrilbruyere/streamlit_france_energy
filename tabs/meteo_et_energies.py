@@ -133,25 +133,25 @@ def run():
     st.markdown(display_text)
 
     fig1, ax = plt.subplots()
-    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
     carte_gen.plot(column = filiere, cmap=map_col_1, legend = True, ax = ax)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
     plt.axis('off')
     plt.title(filiere + ' (énergie)', loc = 'left', color = '#10b8dd')
     st.pyplot(fig1)
 
     fig2, ax = plt.subplots()
-    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
     carte_gen.plot(column = localisation, cmap=map_col_1, legend = True, ax = ax)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
     plt.axis('off')
     plt.title('Capacité ' + localisation[5:] if localisation[:4] == 'Capa' else localisation, loc = 'left', color = '#10b8dd')
     st.pyplot(fig2)
 
     fig3, ax = plt.subplots()
-    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
     carte_gen.plot(column = liaison, cmap=map_col_3, legend = True, ax = ax)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
     plt.axis('off')
     plt.title('Temps clair' if liaison == 'Humidite' else liaison, loc = 'left', color = '#10b8dd')
     st.pyplot(fig3)

@@ -66,17 +66,19 @@ def run():
 
     # Affichage
     fig1 = px.line(data_frame = balance, x = range(0, balance.shape[0]), y = ['Balance', 'Signal filtré'], height = 300)
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     fig1.update_xaxes(tick0 = 0, dtick = 2920, gridcolor='grey', griddash='dash')
     fig1.update_xaxes(showticklabels = False, visible = False)
     fig1.update_yaxes(showgrid=False)
-    fig1.update_layout(margin=dict(l=0, r=0, t=0, b=0), paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white")
+    fig1.update_layout(margin=dict(l=0, r=0, t=0, b=0))
 
     fig2 = px.line(data_frame = balance, x = 'frequence', y = ['power', 'spectre_filtre'], height = 300)
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     fig2.update_xaxes(tick0 = 0, dtick = 2920, gridcolor='grey', griddash='dash')
     fig2.update_xaxes(showticklabels = False, visible = False)
     fig2.update_yaxes(showgrid=False)
     fig2.update_yaxes(range = [0,1e7])
-    fig2.update_layout(margin=dict(l=0, r=0, t=0, b=0), paper_bgcolor="black" if darkdetect.theme() == "Dark" else "white")
+    fig2.update_layout(margin=dict(l=0, r=0, t=0, b=0))
 
     st.plotly_chart(fig1)
     st.plotly_chart(fig2) 

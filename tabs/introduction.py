@@ -100,7 +100,7 @@ def run():
     this_figure.update_xaxes(nticks = nticks, gridcolor='grey', griddash='dash')
     this_figure.update_xaxes(showgrid=False)
     this_figure.update_yaxes(showgrid=False)
-    this_figure.update_layout(margin=dict(l=0, r=0, t=20, b=0))#, paper_bgcolor="LightSteelBlue")
+    this_figure.update_layout(margin=dict(l=0, r=0, t=20, b=0))
 
     st.plotly_chart(this_figure)
 

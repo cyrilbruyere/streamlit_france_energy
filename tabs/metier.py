@@ -104,11 +104,11 @@ def run():
 
     # Affichage
     fig1, ax = plt.subplots()
-    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     carte_met = gpd.GeoDataFrame(carte_met, geometry = 'geometry', crs = 4326)
-    carte_met.plot(column = 'Vent', cmap='PuRd', legend = True, ax = ax)
+    carte_met.plot(column = 'Vent', cmap='BuGn', legend = True, ax = ax)
     carte_eol.plot(markersize = 3, color = map_eol, ax = ax)
     carte_sta.plot(markersize = 3, color = 'blue', ax = ax)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
     plt.axis('off')
     plt.title('Vent', loc = 'left', color = '#10b8dd')
     st.pyplot(fig1)
