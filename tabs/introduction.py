@@ -1,9 +1,10 @@
 import pandas as pd
 # import geopandas as gpd
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import plotly_express as px
 import streamlit as st
 import plotly.subplots as sp
+import darkdetect
 
 title = "Introduction"
 sidebar_name = "Introduction"
@@ -94,6 +95,7 @@ def run():
     for traces in figure2_traces:
         this_figure.append_trace(traces, row=2, col=1)
 
+    plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
     this_figure.update_xaxes(type='category')
     this_figure.update_xaxes(nticks = nticks, gridcolor='grey', griddash='dash')
     this_figure.update_xaxes(showgrid=False)
