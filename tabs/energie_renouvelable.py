@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import geopandas as gpd
 import matplotlib.pyplot as plt
@@ -5,7 +6,6 @@ import plotly_express as px
 import streamlit as st
 import darkdetect
 # import plotly.subplots as sp
-from PIL import Image
 
 title = "Energie renouvelable"
 sidebar_name = "Energie Renouvelable"
@@ -39,11 +39,6 @@ def run():
                     'Hauts de France', 'Ile de France', 'Normandie', 'Nouvelle Aquitaine', 'Occitanie', "Provence Alpes Côte d'Azur",
                     'Pays de Loire']
 
-    
-    # Image
-    img = Image.open("./assets/production.png") 
-    st.image(img, width=500)
-    
     # Filtres de sélection
     st.markdown(
         """
@@ -55,35 +50,20 @@ def run():
         """,
         unsafe_allow_html=True,
     )
-    region = st.selectbox(label = '',
-                        options = region_names,
-                        index = 0,
-                        key='reg_ER')
-
     annee = st.selectbox(label = '',
                         options = range(2013, 2022, 1),
                         index = 8,
                         key='an_ER')
 
-    filiere = st.selectbox(label = '',
-                        options = energies,
-                        index = 2,
-                        key='en_ER')
-
     annee = annee - 2000
-    region_code = regions[region_names.index(region)]
 
-    capa_filiere = ['Capa_Thermique']
-    capa_filiere.append('Capa_' + filiere)
-    TCH_filiere = 'TCH_' + filiere
+    capa_filiere = ['Capa_Thermique', 'Capa_Hydraulique', 'Capa_Eolien', 'Capa_Solaire']
 
     # Dataframe général contenant l'ensemble des données
-    if region == 'France':
-        graf_capa = capacite.drop(['Regions'], axis = 1)
-        graf_capa = graf_capa.groupby(['YYMM']).sum()
-        graf_capa.reset_index(inplace = True)
-    else:
-        graf_capa = capacite[capacite['Regions'] == region_code]
+    graf_capa = capacite.drop(['Regions'], axis = 1)
+    graf_capa = graf_capa.groupby(['YYMM']).sum()
+    graf_capa.reset_index(inplace = True)
+
 
     carte_tch = capacite[capacite['YY'] == annee]
     carte_tch.drop(['YYMM', 'MM'], axis = 1, inplace = True)
@@ -91,7 +71,7 @@ def run():
     carte_tch.reset_index(inplace = True)
 
     energie_tch = energie[energie['YY'] == annee]
-    energie_tch.drop(['YYMM', 'MM'], axis = 1, inplace = True)
+    energie_tch = energie_tch.drop(['YYMM', 'MM'], axis = 1)
     energie_tch = energie_tch.groupby(['Regions', 'YY']).mean()
     energie_tch.reset_index(inplace = True)
 
@@ -104,8 +84,10 @@ def run():
     carte_tch['TCH_Eolien'] = carte_tch['Eolien'] / (carte_tch['Capa_Eolien'] + 1) / 1000 * 100
     carte_tch['TCH_Solaire'] = carte_tch['Solaire'] / (carte_tch['Capa_Solaire'] + 1) / 1000 * 100
 
+    Tcharge = carte_tch[['TCH_Nucleaire', 'TCH_Hydraulique', 'TCH_Eolien', 'TCH_Solaire']]
+    Tcharge = Tcharge.replace(0, np.NaN)
+
     carte_tch = carte_tch.merge(carte, left_on = 'Regions', right_on = 'nom')
-    carte_tch = carte_tch[[TCH_filiere, 'geometry']]
 
     # Affichage
     fig1 = px.line(data_frame = graf_capa, x = 'YYMM', y = capa_filiere, height = 300)
@@ -116,12 +98,33 @@ def run():
     fig1.update_layout(margin=dict(l=20, r=20, t=20, b=20))
     st.plotly_chart(fig1)
 
-    fig2, ax = plt.subplots()
+    fig2, ax = plt.subplots(2, 2)
+    fig2.subplots_adjust(wspace=0.1)
+    
     carte_tch = gpd.GeoDataFrame(carte_tch, geometry = 'geometry', crs = 4326)
-    carte_tch.plot(column = TCH_filiere, cmap='PuRd', legend = True, ax = ax)
+    carte_tch.plot(column = 'TCH_Nucleaire', cmap='Greens', legend = False, ax = ax[0, 0], vmin = 0, vmax = 100)
     plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
-    plt.axis('off')
-    plt.title('Taux de charge', loc = 'left', color = '#10b8dd')
+    ax[0, 0].set_axis_off()
+    ax[0, 0].set_title('TCH Nucléaire : ' + str(round(Tcharge['TCH_Nucleaire'].mean())) + '%', loc = 'center', color = '#10b8dd', size = 8)
+    
+    carte_tch = gpd.GeoDataFrame(carte_tch, geometry = 'geometry', crs = 4326)
+    carte_tch.plot(column = 'TCH_Hydraulique', cmap='Greens', legend = False, ax = ax[0, 1], vmin = 0, vmax = 100)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    ax[0, 1].set_axis_off()
+    ax[0, 1].set_title('TCH Hydraulique : ' + str(round(Tcharge['TCH_Hydraulique'].mean())) + '%', loc = 'center', color = '#10b8dd', size = 8)
+
+    carte_tch = gpd.GeoDataFrame(carte_tch, geometry = 'geometry', crs = 4326)
+    carte_tch.plot(column = 'TCH_Eolien', cmap='Greens', legend = False, ax = ax[1, 0], vmin = 0, vmax = 100)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    ax[1, 0].set_axis_off()
+    ax[1, 0].set_title('TCH Eolien : ' + str(round(Tcharge['TCH_Eolien'].mean())) + '%', loc = 'center', color = '#10b8dd', size = 8)
+
+    carte_tch = gpd.GeoDataFrame(carte_tch, geometry = 'geometry', crs = 4326)
+    carte_tch.plot(column = 'TCH_Solaire', cmap='Greens', legend = False, ax = ax[1, 1], vmin = 0, vmax = 100)
+    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    ax[1, 1].set_axis_off()
+    ax[1, 1].set_title('TCH Solaire : ' + str(round(Tcharge['TCH_Solaire'].mean())) + '%', loc = 'center', color = '#10b8dd', size = 8)
+
     st.pyplot(fig2)
 
     st.markdown("---")

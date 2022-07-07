@@ -14,18 +14,6 @@ def run():
     st.markdown("---")
     
     # Texte de présentation
-    st.subheader("Objectif de prédiction de la balance")
-    st.markdown("""
-                1. Prédiction directe 
-                
-                2. Prédiction indirecte
-
-                La prédiction indirecte consiste à reconstituer la balance à partir de la prédiction de
-                la consommation et les composantes de la production.
-
-                """)
-    st.markdown('') 
-    st.markdown("---")
     st.subheader('Modèles utilisés')
     st.markdown("""
                 1. SARIMAX (régression sur les éléments précédents, moyenne mobile et régresseurs exogènes)
@@ -40,6 +28,18 @@ def run():
                 1. Caractéristiques métérologiques (vent, pluie, température, etc)
                 
                 2. Production d'énergie pilotée par l'homme (nucléaire, thermique, hydraulique)
+                """)
+    st.markdown('') 
+    st.markdown("---")
+    st.subheader("Objectif de prédiction de la balance")
+    st.markdown("""
+                1. Prédiction directe 
+                
+                2. Prédiction indirecte
+
+                La prédiction indirecte consiste à reconstituer la balance à partir de la prédiction de
+                la consommation et les composantes de la production (Hydraulique, Eolienne, Solaire)
+
                 """)
 
     # Filtres de sélection

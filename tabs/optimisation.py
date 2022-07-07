@@ -25,6 +25,15 @@ def run():
                 """)
     st.markdown('') 
     st.markdown("---")
+    st.subheader("Sélection des variables explicatives")
+    st.markdown("""
+                1. Un signal peut être décomposé en une somme de sinusoïdales
+                
+                2. SYNOP : données météorologiques (visualisation et choix des variables)
+
+                """)
+    st.markdown('') 
+    st.markdown("---")
     st.subheader("Lissage des données")
     st.markdown("""
                 1. Données météorologiques disponibles avec un pas de 3h
@@ -32,7 +41,6 @@ def run():
                 2. Lissage mensuel non satisfaisant car supprimant l'information des balances négatives dans le jeu de données.
                 
                 """)
-    st.markdown('') 
     st.markdown("---")
     st.subheader("Réduction des données")
     st.markdown("""
@@ -40,14 +48,7 @@ def run():
                 tout en conservant les caractéristiques principales.
 
                 """)
-    st.markdown("---")
-    st.subheader("Sélection des variables explicatives")
-    st.markdown("""
-                1. SYNOP : données météorologiques (visualisation et choix des variables)
-
-                2. Constitution de bases de données sur les capacités de production (source : Wikipédia)
-
-                """)
+    
 
     # Filtres de sélection
 

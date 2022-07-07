@@ -132,29 +132,49 @@ def run():
     # Affichage
     st.markdown(display_text)
 
-    fig1, ax = plt.subplots()
-    carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = filiere, cmap=map_col_1, legend = True, ax = ax)
-    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
-    plt.axis('off')
-    plt.title(filiere + ' (énergie)', loc = 'left', color = '#10b8dd')
-    st.pyplot(fig1)
+    # fig1, ax = plt.subplots()
+    # carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
+    # carte_gen.plot(column = filiere, cmap=map_col_1, legend = True, ax = ax)
+    # plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    # plt.axis('off')
+    # plt.title(filiere + ' (énergie)', loc = 'left', color = '#10b8dd')
+    # st.pyplot(fig1)
 
-    fig2, ax = plt.subplots()
-    carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = localisation, cmap=map_col_1, legend = True, ax = ax)
-    plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
-    plt.axis('off')
-    plt.title('Capacité ' + localisation[5:] if localisation[:4] == 'Capa' else localisation, loc = 'left', color = '#10b8dd')
-    st.pyplot(fig2)
+    # fig2, ax = plt.subplots()
+    # carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
+    # carte_gen.plot(column = localisation, cmap=map_col_1, legend = True, ax = ax)
+    # plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    # plt.axis('off')
+    # plt.title('Capacité ' + localisation[5:] if localisation[:4] == 'Capa' else localisation, loc = 'left', color = '#10b8dd')
+    # st.pyplot(fig2)
 
-    fig3, ax = plt.subplots()
+    # fig3, ax = plt.subplots()
+    # carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
+    # carte_gen.plot(column = liaison, cmap=map_col_3, legend = True, ax = ax)
+    # plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    # plt.axis('off')
+    # plt.title('Temps clair' if liaison == 'Humidite' else liaison, loc = 'left', color = '#10b8dd')
+    # st.pyplot(fig3)
+
+    fig, ax = plt.subplots(1, 3)
     carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
-    carte_gen.plot(column = liaison, cmap=map_col_3, legend = True, ax = ax)
+    carte_gen.plot(column = filiere, cmap=map_col_1, legend = False, ax = ax[0])
     plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
-    plt.axis('off')
-    plt.title('Temps clair' if liaison == 'Humidite' else liaison, loc = 'left', color = '#10b8dd')
-    st.pyplot(fig3)
+    ax[0].set_axis_off()
+    ax[0].set_title(filiere + ' (énergie)', loc = 'center', color = '#10b8dd', size = 8)
+
+    carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
+    carte_gen.plot(column = localisation, cmap=map_col_1, legend = False, ax = ax[1])
+    # plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    ax[1].set_axis_off()
+    ax[1].set_title('Capacité ' + localisation[5:] if localisation[:4] == 'Capa' else localisation, loc = 'center', color = '#10b8dd', size = 8)
+
+    carte_gen = gpd.GeoDataFrame(carte_gen, geometry = 'geometry', crs = 4326)
+    carte_gen.plot(column = liaison, cmap=map_col_3, legend = False, ax = ax[2])
+    # plt.rcParams['savefig.facecolor'] = 'black' if darkdetect.theme() == "Dark" else 'white'
+    ax[2].set_axis_off()
+    ax[2].set_title('Temps clair' if liaison == 'Humidite' else liaison, loc = 'center', color = '#10b8dd', size = 8)
+    st.pyplot(fig)
 
     # if filiere == 'Consommation':
     #     fig4, ax = plt.subplots()

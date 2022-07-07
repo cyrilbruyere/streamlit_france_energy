@@ -5,6 +5,7 @@ import plotly_express as px
 import streamlit as st
 import plotly.subplots as sp
 import darkdetect
+from PIL import Image
 
 title = "Energies pilotées"
 sidebar_name = "Energies pilotées"
@@ -33,11 +34,14 @@ def run():
 
     # Filtres de sélection
 
-
     # Dataframe général contenant l'ensemble des données
     nucleaire = pd.read_csv('./source/nucleaire.csv', sep = ';')
     thermique = pd.read_csv('./source/thermique.csv', sep = ';')
 
+    # Image
+    img = Image.open("./assets/production.png") 
+    st.image(img, width=500)
+    
     # Affichage
     fig1 = px.line(data_frame = nucleaire, x = range(0, nucleaire.shape[0]), y = ['Nucléaire', 'Avg_nucleaire'], height = 300)
     plt.style.use("dark_background" if darkdetect.theme() == "Dark" else 'seaborn-whitegrid')
