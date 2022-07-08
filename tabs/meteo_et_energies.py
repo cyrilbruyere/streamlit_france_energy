@@ -102,7 +102,7 @@ def run():
         map_col_1 = 'PuBu'
         map_col_3 = 'PuBu'
         display_text = """
-                       La production d'énergie dépent de la localisation des installations, principalement dans les régions où
+                       La production d'énergie dépend de la localisation des installations, principalement dans les régions où
                        il y a du relief, permettant la construction de barrages notamment.
                        En revanche, certaines régions n'ayant pas ou peu de capacité de production, bénéficie de fortes quantités
                        de précipitations. C'est un potentiel non exploité car probablement difficile à exploiter.

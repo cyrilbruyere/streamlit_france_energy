@@ -51,13 +51,16 @@ def run():
         unsafe_allow_html=True,
     )
     annee = st.selectbox(label = '',
-                        options = range(2013, 2022, 1),
-                        index = 8,
+                        options = range(2020, 2022, 1),
+                        index = 0,
                         key='an_ER')
 
     annee = annee - 2000
 
-    capa_filiere = ['Capa_Thermique', 'Capa_Hydraulique', 'Capa_Eolien', 'Capa_Solaire']
+    graphique = st.selectbox(label = '',
+                        options = ['Capacité', 'Charge'],
+                        index = 0,
+                        key='an_ER')
 
     # Dataframe général contenant l'ensemble des données
     graf_capa = capacite.drop(['Regions'], axis = 1)
@@ -88,6 +91,18 @@ def run():
     Tcharge = Tcharge.replace(0, np.NaN)
 
     carte_tch = carte_tch.merge(carte, left_on = 'Regions', right_on = 'nom')
+
+    if graphique == 'Charge':
+        graf_capa['Capa_Thermique'] = graf_capa['Capa_Thermique'] * 96/100
+        graf_capa['Capa_Hydraulique'] = graf_capa['Capa_Hydraulique'] * 39/100
+        graf_capa['Capa_Eolien'] = graf_capa['Capa_Eolien'] * 32/100
+        graf_capa['Capa_Solaire'] = graf_capa['Capa_Solaire'] * 21/100
+    
+    graf_capa.rename({'Capa_Thermique' : 'Thermique', 
+                      'Capa_Hydraulique' : 'Hydraulique',
+                      'Capa_Eolien' : 'Eolien', 
+                      'Capa_Solaire' : 'Solaire'}, axis = 1, inplace = True)
+    capa_filiere = ['Thermique', 'Hydraulique', 'Eolien', 'Solaire']
 
     # Affichage
     fig1 = px.line(data_frame = graf_capa, x = 'YYMM', y = capa_filiere, height = 300)
