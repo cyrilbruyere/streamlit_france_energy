@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import plotly_express as px
 import streamlit as st
 import darkdetect
+from PIL import Image
 # import plotly.subplots as sp
 
 title = "Energie renouvelable"
@@ -39,6 +40,10 @@ def run():
                     'Hauts de France', 'Ile de France', 'Normandie', 'Nouvelle Aquitaine', 'Occitanie', "Provence Alpes Côte d'Azur",
                     'Pays de Loire']
 
+    # Image
+    img = Image.open("./assets/production.png") 
+    st.image(img, width=500)
+    
     # Filtres de sélection
     st.markdown(
         """
@@ -144,7 +149,7 @@ def run():
 
     st.markdown("---")
     st.markdown("""
-                1. Développement des sources renouvelable pour remplacer les énergies fossiles (charbon, ...)
-                2. Plus de capacité mais efficacité réduite, 20 à 60% (contre 90% pour les énergies pilotées)
+                1. Développement des sources renouvelables pour remplacer les énergies fossiles (charbon, ...)
+                2. Plus de capacité mais efficacité réduite, 20 à 40% (contre 90% pour les énergies pilotées)
 
                 """)
